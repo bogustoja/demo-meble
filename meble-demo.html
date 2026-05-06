@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meble dla Instytucji — Jan Nowak</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,600;0,700;1,300&family=Barlow+Condensed:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --red: #cc0000;
+    --red-dark: #990000;
+    --navy: #1a2540;
+    --navy-light: #2d3a5c;
+    --gray: #f4f5f7;
+    --gray-mid: #e2e4e9;
+    --white: #ffffff;
+    --text: #1a1a2e;
+    --muted: #5a6070;
+    --border: #dde1ea;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* TOP BAR */
+  .topbar {
+    background: var(--navy);
+    padding: 0.6rem 6%;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.8rem;
+  }
+  .topbar-left { display: flex; gap: 2rem; color: rgba(255,255,255,0.7); }
+  .topbar-left span { display: flex; align-items: center; gap: 0.4rem; }
+  .topbar-badges { display: flex; gap: 1rem; }
+  .topbar-badge {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.8);
+    padding: 0.2rem 0.75rem;
+    border-radius: 2px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .topbar-badge.red { background: var(--red); color: var(--white); }
+
+  /* NAV */
+  nav {
+    background: var(--white);
+    padding: 1rem 6%;
+    display: flex; justify-content: space-between; align-items: center;
+    border-bottom: 2px solid var(--red);
+    position: sticky; top: 0; z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  .nav-logo img { height: 40px; }
+  .nav-logo-text {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--navy);
+    letter-spacing: 0.04em;
+  }
+  .nav-logo-text span { color: var(--red); }
+  .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+  .nav-links a {
+    font-size: 0.85rem; font-weight: 600;
+    color: var(--navy); text-decoration: none;
+    letter-spacing: 0.04em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--red); }
+  .nav-cta {
+    background: var(--red) !important;
+    color: var(--white) !important;
+    padding: 0.6rem 1.4rem;
+    border-radius: 2px;
+  }
+  .nav-cta:hover { background: var(--red-dark) !important; }
+
+  /* HERO */
+  .hero {
+    background: var(--navy);
+    padding: 5rem 6%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; bottom: 0; width: 4px;
+    background: var(--red);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: rgba(204, 0, 0, 0.05);
+  }
+  .hero-tag {
+    display: inline-block;
+    background: var(--red);
+    color: var(--white);
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.4rem 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .hero-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.05;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 1.25rem;
+  }
+  .hero-title span { color: var(--red); }
+  .hero-subtitle {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.8;
+    font-weight: 300;
+    max-width: 480px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 3rem; }
+  .btn-red {
+    background: var(--red);
+    color: var(--white);
+    padding: 1rem 2rem;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  .btn-red:hover { background: var(--red-dark); transform: translateY(-1px); }
+  .btn-outline-white {
+    background: transparent;
+    color: var(--white);
+    padding: 1rem 2rem;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.3);
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  .btn-outline-white:hover { border-color: var(--white); background: rgba(255,255,255,0.05); }
+  .hero-badges { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .hero-badge {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.8rem; color: rgba(255,255,255,0.5);
+    font-weight: 300;
+  }
+  .hero-badge-icon { color: var(--red); font-size: 1rem; }
+
+  .hero-visual {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1rem; position: relative; z-index: 1;
+  }
+  .hero-img-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    aspect-ratio: 4/3;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 0.5rem;
+    transition: border-color 0.2s;
+  }
+  .hero-img-card:hover { border-color: var(--red); }
+  .hero-img-card.large { grid-column: span 2; aspect-ratio: 16/7; }
+  .hero-img-icon { font-size: 2.5rem; }
+  .hero-img-label { font-size: 0.7rem; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.1em; }
+
+  /* BENEFITS BAR */
+  .benefits-bar {
+    background: var(--red);
+    padding: 1.25rem 6%;
+    display: flex; justify-content: space-around; flex-wrap: wrap; gap: 1rem;
+  }
+  .benefit-item {
+    display: flex; align-items: center; gap: 0.6rem;
+    color: var(--white); font-size: 0.85rem; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .benefit-icon { font-size: 1.1rem; }
+
+  /* SECTIONS */
+  section { padding: 5rem 6%; }
+
+  .section-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 0.8rem; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--red); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 700; text-transform: uppercase;
+    color: var(--navy); line-height: 1.1;
+    letter-spacing: 0.02em; margin-bottom: 1rem;
+  }
+  .section-sub { font-size: 1rem; color: var(--muted); max-width: 560px; line-height: 1.8; font-weight: 300; }
+
+  /* PRODUKTY */
+  #produkty { background: var(--gray); }
+  .produkty-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem; margin-top: 3.5rem;
+  }
+  .produkt-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .produkt-card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px rgba(0,0,0,0.1); }
+  .produkt-img {
+    background: var(--gray);
+    height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 0.5rem;
+    border-bottom: 2px solid var(--red);
+    font-size: 3.5rem;
+  }
+  .produkt-img-label { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+  .produkt-body { padding: 1.5rem; }
+  .produkt-cat {
+    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--red); margin-bottom: 0.5rem;
+  }
+  .produkt-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.2rem; font-weight: 700;
+    color: var(--navy); margin-bottom: 0.5rem;
+    text-transform: uppercase;
+  }
+  .produkt-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; font-weight: 300; }
+
+  /* DLACZEGO */
+  #dlaczego { background: var(--white); }
+  .dlaczego-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center; margin-top: 3.5rem;
+  }
+  .dlaczego-visual {
+    background: var(--navy);
+    border-radius: 4px;
+    height: 420px;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 1rem;
+    border-left: 4px solid var(--red);
+    font-size: 5rem;
+    color: rgba(255,255,255,0.1);
+  }
+  .dlaczego-visual span { font-size: 0.8rem; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 0.1em; }
+  .dlaczego-features { display: flex; flex-direction: column; gap: 1.25rem; }
+  .dlaczego-feature {
+    display: flex; gap: 1rem; align-items: flex-start;
+    padding: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .dlaczego-feature:hover { border-color: var(--red); background: #fff5f5; }
+  .feature-num {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 2rem; font-weight: 700;
+    color: var(--red); line-height: 1;
+    min-width: 40px;
+  }
+  .feature-title { font-size: 0.95rem; font-weight: 600; color: var(--navy); margin-bottom: 0.25rem; }
+  .feature-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; font-weight: 300; }
+
+  /* INSTYTUCJE */
+  #instytucje { background: var(--navy); }
+  #instytucje .section-title { color: var(--white); }
+  #instytucje .section-sub { color: rgba(255,255,255,0.5); }
+  .instytucje-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    gap: 1rem; margin-top: 3.5rem;
+  }
+  .instytucja-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 4px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .instytucja-card:hover { border-color: var(--red); background: rgba(204,0,0,0.05); }
+  .instytucja-icon { font-size: 2.5rem; margin-bottom: 0.75rem; display: block; }
+  .instytucja-name { font-size: 0.9rem; font-weight: 600; color: var(--white); margin-bottom: 0.4rem; }
+  .instytucja-desc { font-size: 0.75rem; color: rgba(255,255,255,0.4); line-height: 1.6; }
+
+  /* CTA */
+  #cta {
+    background: var(--red);
+    padding: 5rem 6%;
+    text-align: center;
+  }
+  #cta .section-title { color: var(--white); margin: 0 auto 1rem; }
+  #cta .section-sub { color: rgba(255,255,255,0.75); margin: 0 auto 2.5rem; text-align: center; }
+  .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .btn-white {
+    background: var(--white);
+    color: var(--red);
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  .btn-white:hover { background: var(--gray); transform: translateY(-1px); }
+  .btn-outline-white-cta {
+    background: transparent;
+    color: var(--white);
+    padding: 1rem 2.5rem;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border: 2px solid rgba(255,255,255,0.5);
+    transition: all 0.2s;
+    display: inline-block;
+  }
+  .btn-outline-white-cta:hover { border-color: var(--white); }
+
+  /* KONTAKT */
+  #kontakt { background: var(--gray); }
+  .kontakt-grid {
+    display: grid; grid-template-columns: 1fr 1.2fr;
+    gap: 5rem; margin-top: 3.5rem; align-items: start;
+  }
+  .kontakt-info { display: flex; flex-direction: column; gap: 1rem; }
+  .kontakt-info > p { font-size: 1rem; color: var(--muted); font-weight: 300; line-height: 1.8; margin-bottom: 0.5rem; }
+  .kontakt-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 1.25rem 1.5rem;
+    display: flex; gap: 1rem; align-items: center;
+    transition: border-color 0.2s;
+    border-left: 3px solid transparent;
+  }
+  .kontakt-card:hover { border-left-color: var(--red); }
+  .kontakt-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: var(--navy);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; color: var(--white);
+  }
+  .kontakt-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); }
+  .kontakt-value { font-size: 0.95rem; color: var(--navy); font-weight: 600; margin-top: 0.15rem; }
+  .kontakt-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.35rem; }
+  .form-label { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+  .form-input, .form-textarea, .form-select {
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--border);
+    background: var(--white);
+    font-family: 'Barlow', sans-serif;
+    font-size: 0.95rem; color: var(--text);
+    transition: border-color 0.2s; outline: none;
+  }
+  .form-input:focus, .form-textarea:focus, .form-select:focus { border-color: var(--red); }
+  .form-textarea { resize: vertical; min-height: 120px; }
+  .form-submit {
+    background: var(--navy); color: var(--white); border: none;
+    padding: 1rem 2rem;
+    font-family: 'Barlow', sans-serif; font-size: 0.9rem;
+    font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    cursor: pointer; transition: background 0.2s; align-self: flex-start;
+  }
+  .form-submit:hover { background: var(--red); }
+
+  /* FOOTER */
+  footer {
+    background: var(--navy); padding: 2rem 6%;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem;
+  }
+  .footer-logo {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 1.3rem; font-weight: 700;
+    color: var(--white); letter-spacing: 0.04em;
+  }
+  .footer-logo span { color: var(--red); }
+  footer p { font-size: 0.8rem; color: rgba(255,255,255,0.4); }
+
+  .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 5%; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 5%; }
+    section { padding: 3rem 5%; }
+    .produkty-grid, .instytucje-grid { grid-template-columns: 1fr 1fr; }
+    .dlaczego-grid, .kontakt-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .form-row { grid-template-columns: 1fr; }
+    .benefits-bar { flex-wrap: wrap; gap: 0.75rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-left">
+    <span>📞 +48 000 000 000</span>
+    <span>✉ kontakt@jannowak.com</span>
+  </div>
+  <div class="topbar-badges">
+    <span class="topbar-badge red">Dostawa 24H</span>
+    <span class="topbar-badge">Jakość potwierdzona</span>
+    <span class="topbar-badge">Bezpieczne płatności</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo-text">JAN <span>NOWAK</span></span>
+  <ul class="nav-links">
+    <li><a href="#produkty">Produkty</a></li>
+    <li><a href="#dlaczego">Dlaczego my</a></li>
+    <li><a href="#instytucje">Instytucje</a></li>
+    <li><a href="#kontakt" class="nav-cta">Zapytaj o ofertę</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <span class="hero-tag">Oferta dla instytucji</span>
+    <h1 class="hero-title">
+      Meble metalowe<br>
+      dla <span>szkół</span><br>
+      i instytucji
+    </h1>
+    <p class="hero-subtitle">Trwałe, certyfikowane meble metalowe marki Jan Nowak — dostosowane do potrzeb szkół, urzędów, szpitali i firm. Szybka dostawa, konkurencyjne ceny, pełna obsługa zamówień zbiorowych.</p>
+    <div class="hero-actions">
+      <a href="#kontakt" class="btn-red">Zapytaj o ofertę</a>
+      <a href="#produkty" class="btn-outline-white">Zobacz katalog →</a>
+    </div>
+    <div class="hero-badges">
+      <div class="hero-badge"><span class="hero-badge-icon">✓</span> Dostawa w 24h</div>
+      <div class="hero-badge"><span class="hero-badge-icon">✓</span> Zamówienia zbiorcze</div>
+      <div class="hero-badge"><span class="hero-badge-icon">✓</span> Faktura VAT</div>
+      <div class="hero-badge"><span class="hero-badge-icon">✓</span> Certyfikowane produkty</div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-img-card large">
+      <span class="hero-img-icon">🗄️</span>
+      <span class="hero-img-label">Zdjęcie produktu tutaj</span>
+    </div>
+    <div class="hero-img-card">
+      <span class="hero-img-icon">🪑</span>
+      <span class="hero-img-label">Krzesła</span>
+    </div>
+    <div class="hero-img-card">
+      <span class="hero-img-icon">📦</span>
+      <span class="hero-img-label">Szafy</span>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS BAR -->
+<div class="benefits-bar">
+  <div class="benefit-item"><span class="benefit-icon">🚚</span> Dostawa w 24H</div>
+  <div class="benefit-item"><span class="benefit-icon">🏆</span> Jakość Potwierdzona</div>
+  <div class="benefit-item"><span class="benefit-icon">💳</span> Bezpieczne Płatności</div>
+  <div class="benefit-item"><span class="benefit-icon">📋</span> Faktury VAT</div>
+  <div class="benefit-item"><span class="benefit-icon">🔧</span> Gwarancja 5 lat</div>
+</div>
+
+<!-- PRODUKTY -->
+<section id="produkty">
+  <p class="section-label fade-up">Asortyment</p>
+  <h2 class="section-title fade-up">Nasze produkty<br>dla instytucji</h2>
+  <p class="section-sub fade-up">Szafy metalowe, biurka, krzesła i regały — wszystko w jednym miejscu, z możliwością zamówień zbiorczych i wyceny indywidualnej.</p>
+  <div class="produkty-grid">
+    <div class="produkt-card fade-up">
+      <div class="produkt-img">🗄️<span class="produkt-img-label">Zdjęcie produktu</span></div>
+      <div class="produkt-body">
+        <p class="produkt-cat">Przechowywanie</p>
+        <h3 class="produkt-name">Szafy metalowe</h3>
+        <p class="produkt-desc">Szafy ubraniowe, aktowe i narzędziowe. Trwała konstrukcja stalowa, zamki atestowane, dostępne w wielu wymiarach.</p>
+      </div>
+    </div>
+    <div class="produkt-card fade-up">
+      <div class="produkt-img">🪑<span class="produkt-img-label">Zdjęcie produktu</span></div>
+      <div class="produkt-body">
+        <p class="produkt-cat">Siedziska</p>
+        <h3 class="produkt-name">Krzesła i ławki</h3>
+        <p class="produkt-desc">Krzesła szkolne, konferencyjne i poczekalniane. Ergonomiczne, wytrzymałe, certyfikowane do użytku instytucjonalnego.</p>
+      </div>
+    </div>
+    <div class="produkt-card fade-up">
+      <div class="produkt-img">🗃️<span class="produkt-img-label">Zdjęcie produktu</span></div>
+      <div class="produkt-body">
+        <p class="produkt-cat">Stanowiska pracy</p>
+        <h3 class="produkt-name">Biurka i stoły</h3>
+        <p class="produkt-desc">Biurka metalowe i kombinowane do szkół, urzędów i pracowni. Stabilna konstrukcja, łatwa w czyszczeniu powierzchnia.</p>
+      </div>
+    </div>
+    <div class="produkt-card fade-up">
+      <div class="produkt-img">📦<span class="produkt-img-label">Zdjęcie produktu</span></div>
+      <div class="produkt-body">
+        <p class="produkt-cat">Organizacja</p>
+        <h3 class="produkt-name">Regały magazynowe</h3>
+        <p class="produkt-desc">Regały stalowe do archiwów, magazynów i pracowni. Modularna budowa umożliwia dowolną konfigurację przestrzeni.</p>
+      </div>
+    </div>
+    <div class="produkt-card fade-up">
+      <div class="produkt-img">🔒<span class="produkt-img-label">Zdjęcie produktu</span></div>
+      <div class="produkt-body">
+        <p class="produkt-cat">Bezpieczeństwo</p>
+        <h3 class="produkt-name">Szafki na klucze</h3>
+        <p class="produkt-desc">Skrzynki i szafki na klucze z zamkami cyfrowymi lub mechanicznymi. Idealne dla portierów i recepcji.</p>
+      </div>
+    </div>
+    <div class="produkt-card fade-up">
+      <div class="produkt-img">🛏️<span class="produkt-img-label">Zdjęcie produktu</span></div>
+      <div class="produkt-body">
+        <p class="produkt-cat">Socjalne</p>
+        <h3 class="produkt-name">Meble socjalne</h3>
+        <p class="produkt-desc">Szatnie, szafki pracownicze i meble do pomieszczeń socjalnych. Trwałe wykończenie odporne na intensywne użytkowanie.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DLACZEGO -->
+<section id="dlaczego">
+  <p class="section-label fade-up">Nasze atuty</p>
+  <h2 class="section-title fade-up">Dlaczego instytucje<br>wybierają Jan Nowak?</h2>
+  <div class="dlaczego-grid">
+    <div class="dlaczego-visual fade-up">
+      🏭
+      <span>Produkcja w Polsce</span>
+    </div>
+    <div class="dlaczego-features">
+      <div class="dlaczego-feature fade-up">
+        <span class="feature-num">01</span>
+        <div>
+          <p class="feature-title">Polska produkcja, europejskie standardy</p>
+          <p class="feature-desc">Wszystkie meble produkowane są w Polsce, zgodnie z normami UE. Pełna dokumentacja techniczna i atesty.</p>
+        </div>
+      </div>
+      <div class="dlaczego-feature fade-up">
+        <span class="feature-num">02</span>
+        <div>
+          <p class="feature-title">Zamówienia zbiorcze i przetargi</p>
+          <p class="feature-desc">Obsługujemy zamówienia publiczne, przetargi i zakupy zbiorcze dla dużych instytucji. Indywidualna wycena i faktura VAT.</p>
+        </div>
+      </div>
+      <div class="dlaczego-feature fade-up">
+        <span class="feature-num">03</span>
+        <div>
+          <p class="feature-title">Dostawa w 24 godziny</p>
+          <p class="feature-desc">Produkty z magazynu dostarczamy w 24h na terenie całej Polski. Możliwość wniesienia i montażu na miejscu.</p>
+        </div>
+      </div>
+      <div class="dlaczego-feature fade-up">
+        <span class="feature-num">04</span>
+        <div>
+          <p class="feature-title">5 lat gwarancji</p>
+          <p class="feature-desc">Na wszystkie produkty udzielamy 5-letniej gwarancji. Serwis i części zamienne dostępne przez cały okres gwarancji.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INSTYTUCJE -->
+<section id="instytucje">
+  <p class="section-label fade-up" style="color:var(--red)">Obsługujemy</p>
+  <h2 class="section-title fade-up">Dla kogo<br>jesteśmy?</h2>
+  <p class="section-sub fade-up">Nasze meble trafiają do tysięcy instytucji w całej Polsce i Europie.</p>
+  <div class="instytucje-grid">
+    <div class="instytucja-card fade-up">
+      <span class="instytucja-icon">🏫</span>
+      <p class="instytucja-name">Szkoły i uczelnie</p>
+      <p class="instytucja-desc">Pracownie, sale lekcyjne, sekretariaty, szatnie</p>
+    </div>
+    <div class="instytucja-card fade-up">
+      <span class="instytucja-icon">🏥</span>
+      <p class="instytucja-name">Placówki medyczne</p>
+      <p class="instytucja-desc">Szpitale, przychodnie, gabinety, apteki</p>
+    </div>
+    <div class="instytucja-card fade-up">
+      <span class="instytucja-icon">🏛️</span>
+      <p class="instytucja-name">Urzędy i instytucje</p>
+      <p class="instytucja-desc">Urzędy miejskie, sądy, policja, wojsko</p>
+    </div>
+    <div class="instytucja-card fade-up">
+      <span class="instytucja-icon">🏭</span>
+      <p class="instytucja-name">Firmy i zakłady</p>
+      <p class="instytucja-desc">Hale produkcyjne, magazyny, biura, szatnie</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <h2 class="section-title fade-up">Potrzebujesz wyceny<br>dla swojej instytucji?</h2>
+  <p class="section-sub fade-up">Skontaktuj się z nami — przygotujemy indywidualną ofertę w ciągu 24 godzin.</p>
+  <div class="cta-actions">
+    <a href="#kontakt" class="btn-white">Zapytaj o ofertę</a>
+    <a href="#" class="btn-outline-white-cta">Pobierz katalog PDF</a>
+  </div>
+</section>
+
+<!-- KONTAKT -->
+<section id="kontakt">
+  <p class="section-label fade-up">Kontakt</p>
+  <h2 class="section-title fade-up">Zapytaj o ofertę</h2>
+  <div class="kontakt-grid">
+    <div class="kontakt-info fade-up">
+      <p>Wypełnij formularz — odpowiemy w ciągu 24 godzin z indywidualną wyceną dla Twojej instytucji.</p>
+      <div class="kontakt-card">
+        <div class="kontakt-icon">📞</div>
+        <div>
+          <p class="kontakt-label">Telefon</p>
+          <p class="kontakt-value">+48 000 000 000</p>
+        </div>
+      </div>
+      <div class="kontakt-card">
+        <div class="kontakt-icon">✉️</div>
+        <div>
+          <p class="kontakt-label">Email</p>
+          <p class="kontakt-value">instytucje@jannowak.com</p>
+        </div>
+      </div>
+      <div class="kontakt-card">
+        <div class="kontakt-icon">🕐</div>
+        <div>
+          <p class="kontakt-label">Godziny pracy</p>
+          <p class="kontakt-value">Pon–Pt: 8:00–17:00</p>
+        </div>
+      </div>
+    </div>
+    <div class="kontakt-form fade-up">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Imię i nazwisko</label>
+          <input type="text" class="form-input" placeholder="Jan Kowalski">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nazwa instytucji</label>
+          <input type="text" class="form-input" placeholder="Szkoła Podstawowa nr 1">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-input" placeholder="jan@instytucja.pl">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Telefon</label>
+          <input type="tel" class="form-input" placeholder="+48 600 000 000">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Rodzaj produktów</label>
+        <select class="form-select">
+          <option>Szafy metalowe</option>
+          <option>Krzesła i ławki</option>
+          <option>Biurka i stoły</option>
+          <option>Regały magazynowe</option>
+          <option>Meble socjalne</option>
+          <option>Inne / kompleksowe wyposażenie</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Opis zapotrzebowania</label>
+        <textarea class="form-textarea" placeholder="Opisz czego potrzebujesz — ilość, wymiary, termin dostawy..."></textarea>
+      </div>
+      <button class="form-submit">Wyślij zapytanie →</button>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-logo">JAN <span>NOWAK</span> — Meble Metalowe</span>
+  <p>© 2025 Jan Nowak. Wszystkie prawa zastrzeżone.</p>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) setTimeout(() => e.target.classList.add('visible'), i * 60);
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
